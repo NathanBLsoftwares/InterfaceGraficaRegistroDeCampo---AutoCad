@@ -27,7 +27,7 @@ internal static class VersaoDetectadas
 
     public static void AdicionarVersaoLista (List<SoftwaresNomes> listaDasVersoes, string CaminhoDoRegistry, string nomeDoSoftware)
     {
-        RegistryKey chaveDeRegistro = Registry.LocalMachine.OpenSubKey(CaminhoDoRegistry);
+        RegistryKey? chaveDeRegistro = Registry.LocalMachine.OpenSubKey(CaminhoDoRegistry);
         if(chaveDeRegistro != null)
         {
             string[] nomeDasSubChaves = chaveDeRegistro.GetSubKeyNames();
@@ -57,5 +57,14 @@ internal static class VersaoDetectadas
         ProcurarVersaoAutoCad.VerificarAutoCad(lista, @"SOFTWARE\AUTODESK\AUTOCAD", "AutoCad");
 
         return lista;
+    }
+
+    public static void CaminhosParaCriacaoDasPastas(string caminhoDoRegistry)
+    {
+        string caminhoFinal = Path.Combine(caminhoDoRegistry, @"ACAD-8101\Applications");
+        if (Directory.Exists(caminhoFinal) != true)
+        {
+            Directory.CreateDirectory(caminhoFinal);
+        }
     }
 }
